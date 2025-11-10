@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  auth:
+    build:
+      context: ./fastapi-oauth
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./fastapi-oauth/.env
+    volumes:
+      - ./fastapi-oauth/secrets:/app/secrets:ro
+    restart: unless-stopped
