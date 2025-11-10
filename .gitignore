@@ -1,0 +1,76 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+# virtual environments
+.venv/
+venv/
+env/
+ENV/
+*.swp
+
+# Build / packaged artifacts
+build/
+dist/
+*.egg-info/
+
+# Byte-compiled / caches
+.cache/
+.mypy_cache/
+.pytest_cache/
+.dmypy.json
+htmlcov/
+.coverage*
+.tox/
+
+# --- FastAPI / Uvicorn ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Firebase Credentials / Secrets ---
+# Nunca subas claves privadas
+.env
+.env.*
+secrets/
+**/auth-service-credentials.json
+*.pem
+*.key
+*.p12
+*.der
+
+# --- OAuth / Login session cookies ---
+*.session
+*.jwt
+
+# --- Node projects (si conectas frontend) ---
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-lock.yaml
+package-lock.json
+
+# --- Editors / IDE ---
+.vscode/
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Docker ---
+*.pid
+*.pid.lock
+docker-data/
