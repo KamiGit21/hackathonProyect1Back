@@ -2,7 +2,19 @@
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from typing import Optional
+from enum import Enum
+from typing import List
 
+class Role(str, Enum):
+    HR_ADMIN = "HR_ADMIN"
+    MANAGER = "MANAGER"
+    EMPLOYEE = "EMPLOYEE"
+
+class AuthUser(BaseModel):
+    uid: str
+    email: Optional[str] = None
+    roles: List[str] = []
+    
 # === Documento de usuario (Firestore) ===
 class UserDoc(BaseModel):
     uid: str
@@ -15,6 +27,7 @@ class UserDoc(BaseModel):
     picture: Optional[str] = None
     provider: str = "google"
     provider_sub: Optional[str] = None
+    roles: List[str] = []
     created_at: Optional[int] = None  # epoch
     updated_at: Optional[int] = None  # epoch
     last_login: Optional[int] = None  # epoch
