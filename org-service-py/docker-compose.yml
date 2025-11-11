@@ -1,0 +1,7 @@
+services:
+  org-service:
+    build: .
+    ports:
+      - "8003:8000"
+    environment:
+      - ENV=dev
