@@ -25,14 +25,4 @@ class Settings(BaseModel):
 
     cors_origins: list[str] = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
     session_secret: str = os.getenv("SESSION_SECRET", "dev-session-secret-change-me")
-
-    ### PARA PAYROLL
-    # Firestore collection para leaves
-    firestore_leave_collection: str = os.getenv("FIRESTORE_LEAVE_COLLECTION", "leave_requests")
-    # Días de vacaciones por año por defecto (saldo simple)
-    leave_days_per_year: int = int(os.getenv("LEAVE_DAYS_PER_YEAR", "15"))
-    # Correos permitidos para aprobar (comma-separated en .env)
-    hr_emails: list[str] = [e.strip() for e in os.getenv("HR_EMAILS", "").split(",") if e.strip()]
-    manager_emails: list[str] = [e.strip() for e in os.getenv("MANAGER_EMAILS", "").split(",") if e.strip()]
-
 settings = Settings()
