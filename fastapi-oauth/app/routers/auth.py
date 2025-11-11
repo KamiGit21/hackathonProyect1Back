@@ -4,7 +4,7 @@ from authlib.integrations.starlette_client import OAuth, OAuthError
 
 from app.config import settings
 from app.security import create_access_token
-from app.schemas import TokenOut, MeOut, StaffOut
+from app.schemas import TokenOut, MeOut, StaffOut, UserOut, AuthUser
 from app.firebase import get_auth
 from app.repos.users_repo import (
     create_or_update_from_google,
@@ -124,8 +124,24 @@ async def google_callback(request: Request):
 
 
 @router.get("/me", response_model=StaffOut)
-def me(user: StaffOut = Depends(current_user)):
+def me(user: AuthUser = Depends(current_user)):
     """
     Devuelve el perfil del usuario autenticado (según tu JWT + Firestore).
+    Transforma AuthUser -> StaffOut para cumplir el response_model.
     """
-    return user
+    doc = get_user_doc(user.uid) or {}
+    username = (
+        doc.get("username") or
+        ((doc.get("email") or "").split("@")[0][:16] if doc.get("email") else "user")
+    )
+
+    return UserOut(
+        uid=user.uid,
+        first_name=doc.get("given_name"),
+        last_name=doc.get("family_name"),
+        email=doc.get("email"),
+        username=username,
+        active=bool(doc.get("active", True)),
+        last_update=None,  # opcional: mapear updated_at epoch -> datetime si quieres
+        roles=user.roles
+    )
