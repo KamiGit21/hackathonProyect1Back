@@ -76,6 +76,23 @@ def create_or_update_from_google(profile: Dict[str, Any], uid: str) -> UserOut:
         data["roles"] = existing.get("roles", ["EMPLOYEE"])
         doc_ref.set(data, merge=True)
 
+    try:
+        fs = get_firestore()
+        emp_col = fs.collection("employees")
+        # ¿ya existe empleado por email?
+        dup = emp_col.where("email", "==", email).limit(1).stream()
+        if next(dup, None) is None:
+            emp_col.document().set({
+                # si usas "ci", déjalo como None o agrega lógica para mapear
+                "ci": None,
+                "name": profile.get("name") or f'{profile.get("given_name","")} {profile.get("family_name","")}'.strip(),
+                "email": email,
+                "phone": None,
+                "status": "ACTIVE",
+            })
+    except Exception as e:
+        print(f"[WARN] employees mirror failed: {e}")
+
     return _to_user_out({**snap.to_dict(), **data} if snap.exists else data)
 
 def set_roles(uid: str, roles: list[str]) -> Dict[str, Any]:

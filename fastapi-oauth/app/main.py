@@ -9,6 +9,8 @@ from app.config import settings
 from app.firebase import init_firebase  # si usas Firebase Admin como te propuse
 from app.routers import auth as auth_router
 from app.routers import auth_roles
+from app.routers import people as people_router
+from app.repos.people_repo import seed_positions_if_empty
 
 # Lifespan: inicializa servicios (Firebase, etc.)
 @asynccontextmanager
@@ -60,7 +62,7 @@ app.add_middleware(
 # Si tu router ya define prefix internamente, déjalo así;
 # si no, puedes darle un prefix aquí:
 app.include_router(auth_router.router, tags=["auth"])
-
+app.include_router(people_router.router)
 app.include_router(auth_roles.router)
 
 # ✅ Healthcheck
