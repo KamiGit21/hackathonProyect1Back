@@ -25,5 +25,4 @@ class Settings(BaseModel):
 
     cors_origins: list[str] = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
     session_secret: str = os.getenv("SESSION_SECRET", "dev-session-secret-change-me")
-
 settings = Settings()
