@@ -12,3 +12,14 @@ services:
     volumes:
       - ./fastapi-oauth/secrets:/app/secrets:ro
     restart: unless-stopped
+  payroll-service:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8009:8009"
+    volumes:
+      - ./secrets:/secrets:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/payroll-sa.json
+    restart: unless-stopped

@@ -1,6 +1,7 @@
 # app/schemas.py
 from pydantic import BaseModel, EmailStr, Field
-from datetime import datetime
+from datetime import datetime, date
+from enum import Enum
 from typing import Optional
 from enum import Enum
 from typing import List
