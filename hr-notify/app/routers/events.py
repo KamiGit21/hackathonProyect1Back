@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Header
 from typing import Dict, Any
 
 from app.schemas.notifications import LeaveApprovedEvent, PayrollPreviewEvent

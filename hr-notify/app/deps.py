@@ -1,7 +1,7 @@
 from fastapi import Header, HTTPException
 from app.config import settings
 
-def verify_api_key(x_api_key: str = Header(...)):
+def verify_api_key(x_api_key: str = Header(..., alias="X-API-Key")):
     """
     Dependency to verify API key for microservice communication
     """
