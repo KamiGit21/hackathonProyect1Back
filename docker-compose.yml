@@ -1,17 +1,6 @@
 version: "3.9"
 
 services:
-  attendance:
-    build:
-      context: ./attendance
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    env_file:
-      - ./attendance/.env
-    volumes:
-      - ./attendance/secrets:/app/secrets:ro
-    restart: unless-stopped
   auth:
     build:
       context: ./fastapi-oauth
@@ -22,15 +11,4 @@ services:
       - ./fastapi-oauth/.env
     volumes:
       - ./fastapi-oauth/secrets:/app/secrets:ro
-    restart: unless-stopped
-  payroll-service:
-    build: .
-    env_file:
-      - .env
-    ports:
-      - "8009:8009"
-    volumes:
-      - ./secrets:/secrets:ro
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/payroll-sa.json
     restart: unless-stopped
